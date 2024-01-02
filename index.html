@@ -9,12 +9,12 @@
   <body>
     <input type="text" id="input" placeholder="제목을 입력해주세요" />
     <button id="searchBtn" type="button">검색</button>
-    <div class="cards-container">
-      <ul class="cards-content">
+    <div id="cards-container">
+      <!-- <ul class="cards-content">
         <li>id : 0</li>
         <li>제목 : 내 영화</li>
         <li>개봉일 : 2013년</li>
-      </ul>
+      </ul> -->
     </div>
 
     <script>
@@ -29,61 +29,91 @@
       };
 
       const $searchBtn = document.querySelector("#searchBtn");
-      let $cards = document.querySelector(".cards-container");
+      let $cards = document.querySelector("#cards-container");
       let $input = document.querySelector("#input");
+      let movie = [
+        { id: 1, name: "고양이 영화", date: "2010년" },
+        { id: 2, name: "강아지영화", date: "2011년" },
+        { id: 3, name: "오리영화", date: "2012년" },
+        { id: 4, name: "고양이 일상", date: "2012년" },
+        { id: 5, name: "고양이의 일주일", date: "2012년" },
+      ];
+      //화면에 보이기
+      movie.forEach((cards, i) => {
+        const cardUl = document.createElement("ul");
+        console.log(cards);
+        console.log(cardUl);
 
+        cardUl.innerHTML = `
+          <li>id : ${cards.id}</li>
+          <li>제목 : ${cards.name}</li>
+          <li>개봉일 : ${cards.date}</li>
+          `;
+
+        return $cards.append(cardUl);
+      });
+
+      // 검색 버튼을 클릭 시,
       $searchBtn.addEventListener("click", async (e) => {
-        let inputValue = $input.value;
-        console.log(inputValue);
-
-        await fetch(
+        //영화정보 가져와서 담기
+        const movieFactory = await fetch(
           "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
           options
         )
           .then((res) => res.json())
           .then((res) => {
-            console.log(res);
-            let movieRes = res;
-            return movieRes;
+            // console.log(res);
+            return res;
           })
           .catch((err) => console.error(err));
-
-        console.log($cards);
-        let movie = [
-          { id: "1", name: "고양이 영화", date: "2010년" },
-          { id: "2", name: "강아지영화", date: "2011년" },
-          { id: "3", name: "오리영화", date: "2012년" },
-          { id: "4", name: "고양이 일상", date: "2012년" },
+        console.log(movieFactory);
+        //인풋에 적은 키워드 가져와서 담기
+        let inputValue = $input.value;
+        // 검색어와 일치하는 정보 찾아내기
+        let equalCardData = [
+          movie.filter((movie) => {
+            console.log(inputValue);
+            return movie.name.includes(inputValue);
+          }),
         ];
+        // console.log(equalCardData);
 
-        //movie 배열 안에 영화 정보들을 읽으면서
-        // for (let i = 0; i < movie.length; i++) {
-        // let card_name = movie[i].name;
-        // let card_date = movie[i].date;
-        // 검색어가 들어있는 영화 찾기
-        let cardData = movie.filter((movie) => {
-          return movie.name.includes(inputValue);
+        //이전 정보 비워주기
+        $cards.innerHTML = "";
+
+        //찾은 키워드에 대한 카드 정보를 채우기
+        equalCardData.map((searchCard, i) => {
+          const searchCardUl = document.createElement("ul");
+          console.log(searchCard);
+          console.log(searchCardUl);
+
+          searchCardUl.innerHTML = `
+          <li>id : ${searchCard[i].id}</li>
+          <li>제목 : ${searchCard[i].name}</li>
+          <li>개봉일 : ${searchCard[i].date}</li>
+          `;
+
+          return $cards.append(searchCardUl);
         });
-        console.log(cardData);
-        // $cards.removeChild();
-
-        // console.log(i);
-
-        cardData.map((card) => {
-          console.log(card);
-          let movie_html = `
-          <ul class="cards-content">
-            <li>id : ${card["id"]}</li>
-            <li>제목 : ${card["name"]}</li>
-            <li>개봉일 : ${card["date"]}</li>
-          </ul>  
-            `;
-          // console.log(1);
-          return ($cards.innerHTML = movie_html);
-        });
-        // window.alert("작동!");
-        // }
       });
     </script>
   </body>
 </html>
+
+<!-- //시도
+        // equalCardData.map((card) => {
+        //   console.log(card);
+        //   // console.log(card);
+
+        //   let movie_html = `
+        //   <ul class="cards-content">
+        //     <li>id : ${card.id}</li>
+        //     <li>제목 : ${card.name}</li>
+        //     <li>개봉일 : ${card.date}</li>
+        //   </ul>
+        //     `;
+        //   // console.log(1);
+        //   return ($cards.innerHTML = movie_html);
+        // });
+        // window.alert("작동!");
+        // } -->
