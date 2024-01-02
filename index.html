@@ -11,22 +11,7 @@
     <h2>영화 검색 :</h2>
     <input type="text" id="input" placeholder="영화 제목을 검색해 보세요" />
     <button id="searchBtn" type="button">검색</button>
-    <div id="cards-container">
-      <!-- <div class="cards-content">
-        <div class="id">id : 278</div>
-        <img
-          src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
-          alt="The Shawshank Redemptio"
-          class="image"
-        />
-        <h3 class="title">The Shawshank Redemption</h3>
-        <p class="overview">
-          내용 요약 : Framed in the 1940s for the double murder of his w…for his
-          integrity and unquenchable sense of hope.
-        </p>
-        <p class="Rating">Rating : 8.708</p>
-      </div> -->
-    </div>
+    <div id="cards-container"></div>
 
     <script>
       //필수 요구사항 [1] jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
@@ -62,13 +47,10 @@
         // 2-2. 화면에 보이기
         movies.forEach((mainCards, i) => {
           const $mainCardsDiv = document.createElement("div");
-          // 생성한 div에 클래스 붙여주기
+          // 2-3. 생성한 div에 클래스 붙여주기
           $mainCardsDiv.setAttribute("class", "card-content");
-          console.log($mainCardsDiv);
-          console.log(mainCards);
-          // const $newCards = $mainCardsDiv.classList.add("card-content");
           $mainCardsDiv.innerHTML = `
-              <div>id : ${mainCards.id}</div>
+          <div>id : ${mainCards.id}</div>
               <img src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}" alt="${mainCards.title}">
               <h3>제목 : ${mainCards.title}</h3>
               <p>내용 요약 : ${mainCards.overview}</p>
@@ -86,17 +68,14 @@
           let equalCardData = movies.filter((movie) => {
             return movie.title.includes(inputValue);
           });
-          console.log(equalCardData);
 
-          //이전 정보 비워주기
+          //6. 이전 정보 비워주기
           $cards.innerHTML = "";
 
-          //찾은 키워드에 대한 카드 정보를 채우기
+          //7. 찾은 키워드에 대한 카드 정보를 채우기
           equalCardData.map((searchCard, i) => {
             const $searchCardDiv = document.createElement("div");
             $searchCardDiv.setAttribute("class", "card-content");
-            console.log($searchCardDiv);
-            console.log(searchCard);
 
             $searchCardDiv.innerHTML = `
               <div>id : ${searchCard.id}</div>
@@ -105,7 +84,6 @@
               <p>내용 요약 : ${searchCard.overview}</p>
               <p class="Rating">Rating : ${searchCard.vote_average}</p>
           `;
-            console.log($searchCardDiv);
 
             return $cards.append($searchCardDiv);
           });
@@ -115,7 +93,7 @@
   </body>
 </html>
 
-<!-- //시도
+<!-- //시도한 것들
   //트러블 슈팅 전체 정보 equalCardData가 filter가 내뱉는 배열인데 
 // 검색어와 일치하는 정보 찾아내기
         let equalCardData = movie.filter((movie) => {
@@ -149,3 +127,5 @@
         { id: 4, name: "고양이 일상", date: "2012년" },
         { id: 5, name: "고양이의 일주일", date: "2012년" },
       ]; -->
+
+<!-- // const $newCards = $mainCardsDiv.classList.add("card-content"); -->
