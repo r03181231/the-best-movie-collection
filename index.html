@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <input type="text" id="input" placeholder="제목을 입력해주세요" />
+    <button id="searchBtn" type="button">검색</button>
+    <div class="cards-container">
+      <ul class="cards-content">
+        <li>id : 0</li>
+        <li>제목 : 내 영화</li>
+        <li>개봉일 : 2013년</li>
+      </ul>
+    </div>
+
+    <script>
+      //필수 요구사항[2] TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
+        },
+      };
+
+      const $searchBtn = document.querySelector("#searchBtn");
+      let $cards = document.querySelector(".cards-container");
+      let $input = document.querySelector("#input");
+
+      $searchBtn.addEventListener("click", async (e) => {
+        let inputValue = $input.value;
+        console.log(inputValue);
+
+        await fetch(
+          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+          options
+        )
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            let movieRes = res;
+            return movieRes;
+          })
+          .catch((err) => console.error(err));
+
+        console.log($cards);
+        let movie = [
+          { id: "1", name: "고양이 영화", date: "2010년" },
+          { id: "2", name: "강아지영화", date: "2011년" },
+          { id: "3", name: "오리영화", date: "2012년" },
+          { id: "4", name: "고양이 일상", date: "2012년" },
+        ];
+
+        //movie 배열 안에 영화 정보들을 읽으면서
+        // for (let i = 0; i < movie.length; i++) {
+        // let card_name = movie[i].name;
+        // let card_date = movie[i].date;
+        // 검색어가 들어있는 영화 찾기
+        let cardData = movie.filter((movie) => {
+          return movie.name.includes(inputValue);
+        });
+        console.log(cardData);
+        // $cards.removeChild();
+
+        // console.log(i);
+
+        cardData.map((card) => {
+          console.log(card);
+          let movie_html = `
+          <ul class="cards-content">
+            <li>id : ${card["id"]}</li>
+            <li>제목 : ${card["name"]}</li>
+            <li>개봉일 : ${card["date"]}</li>
+          </ul>  
+            `;
+          // console.log(1);
+          return ($cards.innerHTML = movie_html);
+        });
+        // window.alert("작동!");
+        // }
+      });
+    </script>
+  </body>
+</html>
