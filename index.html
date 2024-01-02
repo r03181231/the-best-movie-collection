@@ -7,17 +7,29 @@
     <style></style>
   </head>
   <body>
-    <input type="text" id="input" placeholder="제목을 입력해주세요" />
+    <h1>최고 평점 영화 콜렉션</h1>
+    <h2>영화 검색 :</h2>
+    <input type="text" id="input" placeholder="영화 제목을 검색해 보세요" />
     <button id="searchBtn" type="button">검색</button>
     <div id="cards-container">
-      <!-- <ul class="cards-content">
-        <li>id : 0</li>
-        <li>제목 : 내 영화</li>
-        <li>개봉일 : 2013년</li>
-      </ul> -->
+      <!-- <div class="cards-content">
+        <div class="id">id : 278</div>
+        <img
+          src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+          alt="The Shawshank Redemptio"
+          class="image"
+        />
+        <h3 class="title">The Shawshank Redemption</h3>
+        <p class="overview">
+          내용 요약 : Framed in the 1940s for the double murder of his w…for his
+          integrity and unquenchable sense of hope.
+        </p>
+        <p class="Rating">Rating : 8.708</p>
+      </div> -->
     </div>
 
     <script>
+      //필수 요구사항 [1] jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
       //필수 요구사항[2] TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
       const options = {
         method: "GET",
@@ -27,73 +39,76 @@
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
         },
       };
+      //브라우저가 켜진 후
+      document.addEventListener("DOMContentLoaded", async function () {
+        const $searchBtn = document.querySelector("#searchBtn");
+        const $cards = document.querySelector("#cards-container");
+        const $input = document.querySelector("#input");
+        const url =
+          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
 
-      const $searchBtn = document.querySelector("#searchBtn");
-      let $cards = document.querySelector("#cards-container");
-      let $input = document.querySelector("#input");
-      let movie = [
-        { id: 1, name: "고양이 영화", date: "2010년" },
-        { id: 2, name: "강아지영화", date: "2011년" },
-        { id: 3, name: "오리영화", date: "2012년" },
-        { id: 4, name: "고양이 일상", date: "2012년" },
-        { id: 5, name: "고양이의 일주일", date: "2012년" },
-      ];
-      //화면에 보이기
-      movie.forEach((cards, i) => {
-        const cardUl = document.createElement("ul");
-        console.log(cards);
-        console.log(cardUl);
-
-        cardUl.innerHTML = `
-          <li>id : ${cards.id}</li>
-          <li>제목 : ${cards.name}</li>
-          <li>개봉일 : ${cards.date}</li>
-          `;
-
-        return $cards.append(cardUl);
-      });
-
-      // 검색 버튼을 클릭 시,
-      $searchBtn.addEventListener("click", async (e) => {
-        //영화정보 가져와서 담기
-        const movieFactory = await fetch(
-          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-          options
-        )
+        // 1. 영화정보 가져와서 담기
+        const movies = await fetch(url, options)
           .then((res) => res.json())
           .then((res) => {
-            // console.log(res);
-            return res;
+            const movie = res.results;
+            return movie;
           })
           .catch((err) => console.error(err));
-        console.log(movieFactory);
-        //인풋에 적은 키워드 가져와서 담기
-        let inputValue = $input.value;
-        // 검색어와 일치하는 정보 찾아내기
-        let equalCardData = [
-          movie.filter((movie) => {
-            console.log(inputValue);
-            return movie.name.includes(inputValue);
-          }),
-        ];
-        // console.log(equalCardData);
 
-        //이전 정보 비워주기
-        $cards.innerHTML = "";
+        //2-1. response값 꺼내기
+        console.log(movies);
 
-        //찾은 키워드에 대한 카드 정보를 채우기
-        equalCardData.map((searchCard, i) => {
-          const searchCardUl = document.createElement("ul");
-          console.log(searchCard);
-          console.log(searchCardUl);
+        // 2-2. 화면에 보이기
+        movies.forEach((mainCards, i) => {
+          const $mainCardsDiv = document.createElement("div");
+          // 생성한 div에 클래스 붙여주기
+          $mainCardsDiv.setAttribute("class", "card-content");
+          console.log($mainCardsDiv);
+          console.log(mainCards);
+          // const $newCards = $mainCardsDiv.classList.add("card-content");
+          $mainCardsDiv.innerHTML = `
+              <div>id : ${mainCards.id}</div>
+              <img src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}" alt="${mainCards.title}">
+              <h3>제목 : ${mainCards.title}</h3>
+              <p>내용 요약 : ${mainCards.overview}</p>
+              <p class="Rating">Rating : ${mainCards.vote_average}</p>
+            `;
 
-          searchCardUl.innerHTML = `
-          <li>id : ${searchCard[i].id}</li>
-          <li>제목 : ${searchCard[i].name}</li>
-          <li>개봉일 : ${searchCard[i].date}</li>
+          return $cards.append($mainCardsDiv);
+        });
+
+        // 3. 검색 버튼을 클릭 시,
+        $searchBtn.addEventListener("click", (e) => {
+          // 4. 인풋에 적은 키워드 가져와서 담기
+          let inputValue = $input.value;
+          // 5. 검색어와 일치하는 정보 찾아내기
+          let equalCardData = movies.filter((movie) => {
+            return movie.title.includes(inputValue);
+          });
+          console.log(equalCardData);
+
+          //이전 정보 비워주기
+          $cards.innerHTML = "";
+
+          //찾은 키워드에 대한 카드 정보를 채우기
+          equalCardData.map((searchCard, i) => {
+            const $searchCardDiv = document.createElement("div");
+            $searchCardDiv.setAttribute("class", "card-content");
+            console.log($searchCardDiv);
+            console.log(searchCard);
+
+            $searchCardDiv.innerHTML = `
+              <div>id : ${searchCard.id}</div>
+              <img src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}" alt="${searchCard.title}">
+              <h3>제목 : ${searchCard.title}</h3>
+              <p>내용 요약 : ${searchCard.overview}</p>
+              <p class="Rating">Rating : ${searchCard.vote_average}</p>
           `;
+            console.log($searchCardDiv);
 
-          return $cards.append(searchCardUl);
+            return $cards.append($searchCardDiv);
+          });
         });
       });
     </script>
@@ -101,6 +116,15 @@
 </html>
 
 <!-- //시도
+  //트러블 슈팅 전체 정보 equalCardData가 filter가 내뱉는 배열인데 
+// 검색어와 일치하는 정보 찾아내기
+        let equalCardData = movie.filter((movie) => {
+          return movie.name.includes(inputValue);
+        });
+        console.log(equalCardData);
+
+
+
         // equalCardData.map((card) => {
         //   console.log(card);
         //   // console.log(card);
@@ -117,3 +141,11 @@
         // });
         // window.alert("작동!");
         // } -->
+
+<!-- const movie = [
+        { id: 1, name: "고양이 영화", date: "2010년" },
+        { id: 2, name: "강아지영화", date: "2011년" },
+        { id: 3, name: "오리영화", date: "2012년" },
+        { id: 4, name: "고양이 일상", date: "2012년" },
+        { id: 5, name: "고양이의 일주일", date: "2012년" },
+      ]; -->
