@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
     <style></style>
   </head>
   <body>
@@ -13,9 +14,10 @@
     <button id="searchBtn" type="button">검색</button>
     <div id="cards-container"></div>
 
-    <script>
+    <script type="module">
       //필수 요구사항 [1] jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
       //필수 요구사항[2] TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
+      // const movieIdAlert = movieIdAlert();
       const options = {
         method: "GET",
         headers: {
@@ -26,6 +28,7 @@
       };
       //브라우저가 켜진 후
       document.addEventListener("DOMContentLoaded", async (e) => {
+        const $cardAll = document.getElementsByClassName("card-content");
         const url =
           "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
         const $searchBtn = document.querySelector("#searchBtn");
@@ -48,18 +51,19 @@
           // 2-3. 생성한 div에 클래스 붙여주기
           $mainCardsDiv.setAttribute("class", "card-content");
           $mainCardsDiv.innerHTML = `
-              <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
-              <img src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}" alt="${mainCards.title}">
-              <h3>제목 : ${mainCards.title}</h3>
-              <p>내용 요약 : ${mainCards.overview}</p>
-              <p class="Rating">평점 : ${mainCards.vote_average}</p>
-            `;
+                    <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
+                    <img src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}" alt="${mainCards.title}">
+                    <h3>제목 : ${mainCards.title}</h3>
+                    <p>내용 요약 : ${mainCards.overview}</p>
+                    <p class="Rating">평점 : ${mainCards.vote_average}</p>
+                  `;
 
           return $cards.append($mainCardsDiv);
         });
         // =========================================================
         // 3. 검색 버튼을 클릭 시,
         $searchBtn.addEventListener("click", (e) => {
+          const $cardAll = document.getElementsByClassName("card-content");
           // 4. 인풋에 적은 키워드 가져와서 담기
           const inputValue = $input.value;
           // 5. 검색어와 일치하는 정보 찾아내기
@@ -73,29 +77,24 @@
           equalCardData.map((searchCard, i) => {
             const $searchCardDiv = document.createElement("div");
             $searchCardDiv.setAttribute("class", "card-content");
-
-            $searchCardDiv.innerHTML = `
-              <div id="${searchCard.id}" class="target">id : ${searchCard.id}</div>
-              <img src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}" alt="${searchCard.title}">
-              <h3>제목 : ${searchCard.title}</h3>
-              <p>내용 요약 : ${searchCard.overview}</p>
-              <p class="Rating">평점 : ${searchCard.vote_average}</p>
-          `;
+            $searchCardDiv.innerHTML = ` 
+                    <div id="${searchCard.id}" class="target">id : ${searchCard.id}</div>
+                    <img src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}" alt="${searchCard.title}">
+                    <h3>제목 : ${searchCard.title}</h3>
+                    <p>내용 요약 : ${searchCard.overview}</p>
+                    <p class="Rating">평점 : ${searchCard.vote_average}</p>
+                  `;
 
             return $cards.append($searchCardDiv);
           });
+
+          //전체카드 중에서
+          movieIdAlert("영화 id", $cardAll);
         });
         //카드 클릭 시, 클릭한 영화카드 id값 alert창에 띄우기
-        const $cardAll = document.getElementsByClassName("card-content");
-        //전체카드 중에서
-        for (let i = 0; i < $cardAll.length; i++) {
-          //카드 하나 클릭 시,
-          $cardAll[i].addEventListener("click", async (event) => {
-            let onetargetCardId = event.target.children[0].id;
-            alert(`영화 id : ${onetargetCardId}`);
-          });
-        }
+        movieIdAlert("영화 id", $cardAll);
       });
     </script>
+    <script src="./js/alert.js"></script>
   </body>
 </html>
