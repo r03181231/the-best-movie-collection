@@ -25,13 +25,12 @@
         },
       };
       //브라우저가 켜진 후
-      document.addEventListener("DOMContentLoaded", async () => {
+      document.addEventListener("DOMContentLoaded", async (e) => {
+        const url =
+          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
         const $searchBtn = document.querySelector("#searchBtn");
         const $cards = document.querySelector("#cards-container");
         const $input = document.querySelector("#input");
-        const url =
-          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
-
         // 1. 영화정보 가져와서 담기
         const movies = await fetch(url, options)
           .then((res) => res.json())
@@ -40,7 +39,6 @@
             return movie;
           })
           .catch((err) => console.error(err));
-
         //2-1. response값 꺼내기
         // console.log(movies);
 
@@ -50,7 +48,7 @@
           // 2-3. 생성한 div에 클래스 붙여주기
           $mainCardsDiv.setAttribute("class", "card-content");
           $mainCardsDiv.innerHTML = `
-              <div>id : ${mainCards.id}</div>
+              <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
               <img src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}" alt="${mainCards.title}">
               <h3>제목 : ${mainCards.title}</h3>
               <p>내용 요약 : ${mainCards.overview}</p>
@@ -59,27 +57,25 @@
 
           return $cards.append($mainCardsDiv);
         });
-
+        // =========================================================
         // 3. 검색 버튼을 클릭 시,
         $searchBtn.addEventListener("click", (e) => {
           // 4. 인풋에 적은 키워드 가져와서 담기
-          let inputValue = $input.value;
+          const inputValue = $input.value;
           // 5. 검색어와 일치하는 정보 찾아내기
-          let equalCardData = movies.filter((movie) => {
+          const equalCardData = movies.filter((movie) => {
             return movie.title.includes(inputValue);
           });
-
           // 6. 이전 정보 비워주기
           $cards.innerHTML = "";
 
           // 7. 찾은 키워드에 대한 카드 정보를 채우기
           equalCardData.map((searchCard, i) => {
             const $searchCardDiv = document.createElement("div");
-
             $searchCardDiv.setAttribute("class", "card-content");
 
             $searchCardDiv.innerHTML = `
-              <div>id : ${searchCard.id}</div>
+              <div id="${searchCard.id}" class="target">id : ${searchCard.id}</div>
               <img src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}" alt="${searchCard.title}">
               <h3>제목 : ${searchCard.title}</h3>
               <p>내용 요약 : ${searchCard.overview}</p>
@@ -89,45 +85,17 @@
             return $cards.append($searchCardDiv);
           });
         });
+        //카드 클릭 시, 클릭한 영화카드 id값 alert창에 띄우기
+        const $cardAll = document.getElementsByClassName("card-content");
+        //전체카드 중에서
+        for (let i = 0; i < $cardAll.length; i++) {
+          //카드 하나 클릭 시,
+          $cardAll[i].addEventListener("click", async (event) => {
+            let onetargetCardId = event.target.children[0].id;
+            alert(`영화 id : ${onetargetCardId}`);
+          });
+        }
       });
     </script>
   </body>
 </html>
-
-<!-- //시도한 것들
-  //트러블 슈팅 전체 정보 equalCardData가 filter가 내뱉는 배열인데 
-// 검색어와 일치하는 정보 찾아내기
-        let equalCardData = movie.filter((movie) => {
-          return movie.name.includes(inputValue);
-        });
-        console.log(equalCardData);
-
-
-
-        // equalCardData.map((card) => {
-        //   console.log(card);
-        //   // console.log(card);
-
-        //   let movie_html = `
-        //   <ul class="cards-content">
-        //     <li>id : ${card.id}</li>
-        //     <li>제목 : ${card.name}</li>
-        //     <li>개봉일 : ${card.date}</li>
-        //   </ul>
-        //     `;
-        //   // console.log(1);
-        //   return ($cards.innerHTML = movie_html);
-        // });
-        // window.alert("작동!");
-        // } -->
-
-<!-- const movie = [
-        { id: 1, name: "고양이 영화", date: "2010년" },
-        { id: 2, name: "강아지영화", date: "2011년" },
-        { id: 3, name: "오리영화", date: "2012년" },
-        { id: 4, name: "고양이 일상", date: "2012년" },
-        { id: 5, name: "고양이의 일주일", date: "2012년" },
-      ]; -->
-
-<!-- //  -->
-<!-- const $newCards = $mainCardsDiv.classList.add("card-content"); -->
