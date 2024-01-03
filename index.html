@@ -17,7 +17,6 @@
     <script type="module">
       //필수 요구사항 [1] jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
       //필수 요구사항[2] TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
-      // const movieIdAlert = movieIdAlert();
       const options = {
         method: "GET",
         headers: {
@@ -70,7 +69,8 @@
           const equalCardData = movies.filter((movie) => {
             return movie.title.includes(inputValue);
           });
-          // 6. 이전 정보 비워주기
+          // 6. 이전 정보 비워주기 -incertAdjacentHTML("afterend", "");로 추후 수정해보기
+          // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 XXS공격에 취약
           $cards.innerHTML = "";
 
           // 7. 찾은 키워드에 대한 카드 정보를 채우기
