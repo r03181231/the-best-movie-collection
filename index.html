@@ -94,9 +94,10 @@
                          src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}"
                          alt="${mainCards.title}"
                        />
-                    </div>                    <h3>제목 : ${mainCards.title}</h3>
-                    <p>내용 요약 : ${mainCards.overview}</p>
-                    <p class="Rating">평점 : ${mainCards.vote_average}</p>
+                    </div>                    
+                    <h3>${mainCards.title}</h3>
+                    <p class="over-view">${mainCards.overview}</p>
+                    <p class="rating">Rating : <span class="rating-number">${mainCards.vote_average}</span></p>
                   </div>
                   `;
 
@@ -104,6 +105,7 @@
         });
         // const $cardsEach = document.querySelector("#card-content");
         // console.log($cardsEach);
+        // 필수요구[3] - 영화정보 카드 리스트 UI 구현 -카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
         $cards.addEventListener("click", (e) => {
           //card-container
           // console.log(e.target.closest(".card-content"));
@@ -136,7 +138,7 @@
 
           // 7. 찾은 키워드에 대한 카드 정보를 채우기
           //필수요구[5] - 하기 기재된 Javascript 문법 요소를 이용하여 구현
-          equalCardData.map((searchCard, i) => {
+          equalCardData.forEach((searchCard, i) => {
             const $searchCardDiv = document.createElement("div");
             $searchCardDiv.setAttribute("class", "card-content");
             //  -incertAdjacentHTML("afterend", "");로 추후 수정해보기
@@ -149,9 +151,10 @@
                          src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}"
                          alt="${searchCard.title}"
                        />
-                    </div>                     <h3>제목 : ${searchCard.title}</h3>
-                    <p>내용 요약 : ${searchCard.overview}</p>
-                    <p class="Rating">평점 : ${searchCard.vote_average}</p>
+                    </div>
+                    <h3>${searchCard.title}</h3>
+                    <p class="over-view">${searchCard.overview}</p>
+                    <p class="rating">Rating : <span class="rating-number">${searchCard.vote_average}</span></p>
                 </div>
                   `;
 
@@ -166,13 +169,12 @@
             searchBtnClick();
           }
         });
+        //3. 검색 버튼을 클릭 시,필수요구[4] - 영화 검색 UI 구현 함수 호출
         $searchBtn.addEventListener("click", searchBtnClick);
-        //===================여기까지 검색
         // const $cardTarget = document.getElementsByClassName("card-wrap");
 
         // console.log($cardTarget);
 
-        // 필수요구[3] - 영화정보 카드 리스트 UI 구현 -카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
         // for (let i = 0; i < $cardTarget.length; i++) {
         //   console.log($cardTarget[i]);
         //   //카드 하나 클릭 시,
