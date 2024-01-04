@@ -4,15 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-    <style></style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-    <h1>최고 평점 영화 콜렉션</h1>
-    <h2>영화 검색 :</h2>
-    <input type="text" id="input" placeholder="영화 제목을 검색해 보세요" />
-    <button id="searchBtn" type="button">검색</button>
-    <div id="cards-container"></div>
+    <div class="layout-1280">
+      <header>
+        <h1>최고 평점 영화 콜렉션</h1>
+        <div class="titleNsearch">
+          <h2>영화 검색</h2>
+          <div class="inputNsearchBtn">
+            <input
+              type="text"
+              id="input"
+              placeholder="영화 제목을 검색해 보세요"
+            />
+            <div class="searchBtnWrap">
+              <button id="searchBtn" type="button">검색</button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div id="cards-container" class="cardContainer">
+          <!-- <div class="card-content">
+            <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
+            <div class="imgSort">
+              <img
+                src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}"
+                alt="${mainCards.title}"
+              />
+            </div>
+            <h3>제목 : ${mainCards.title}</h3>
+            <p>내용 요약 : ${mainCards.overview}</p>
+            <p class="Rating">평점 : ${mainCards.vote_average}</p>
+          </div> -->
+        </div>
+      </main>
+      <footer>
+        <div>
+          <p>Designed by <span>11조 남해리</span></p>
+        </div>
+        <div>
+          <span>copyright. 프로그래밍 기초</span>
+        </div>
+      </footer>
+    </div>
 
     <script>
       //필수요구[1] - jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
@@ -51,14 +92,19 @@
         // console.log(movies);
 
         // 2-2. 필수요구[3] - 영화정보 카드 리스트 UI 구현
+        //필수요구[5] - 하기 기재된 Javascript 문법 요소를 이용하여 구현
         movies.forEach((mainCards, i) => {
           const $mainCardsDiv = document.createElement("div");
           // 2-3. 생성한 div에 클래스 붙여주기
           $mainCardsDiv.setAttribute("class", "card-content");
           $mainCardsDiv.innerHTML = `
                     <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
-                    <img src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}" alt="${mainCards.title}">
-                    <h3>제목 : ${mainCards.title}</h3>
+                    <div class="imgSort">
+                       <img
+                         src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}"
+                         alt="${mainCards.title}"
+                       />
+                    </div>                    <h3>제목 : ${mainCards.title}</h3>
                     <p>내용 요약 : ${mainCards.overview}</p>
                     <p class="Rating">평점 : ${mainCards.vote_average}</p>
                   `;
@@ -72,8 +118,9 @@
           // 4. 인풋에 적은 키워드 가져와서 담기
           const inputValue = $input.value;
           // 5-1. 검색어와 일치하는 정보 찾아내기
+          // 필수요구[5] - 하기 기재된 Javascript 문법 요소를 이용하여 구현
+          // 선택요구 - 대소문자 관계없이 검색 가능하게 하기
           const equalCardData = movies.filter((movie) => {
-            // 5-2. 선택요구 - 대소문자 관계없이 검색 가능하게 하기
             const upperValue = inputValue.toUpperCase();
             return movie.title.toUpperCase().includes(upperValue);
           });
@@ -81,6 +128,7 @@
           $cards.innerHTML = "";
 
           // 7. 찾은 키워드에 대한 카드 정보를 채우기
+          //필수요구[5] - 하기 기재된 Javascript 문법 요소를 이용하여 구현
           equalCardData.map((searchCard, i) => {
             const $searchCardDiv = document.createElement("div");
             $searchCardDiv.setAttribute("class", "card-content");
@@ -88,8 +136,12 @@
             // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 XXS공격에 취약
             $searchCardDiv.innerHTML = `
                     <div id="${searchCard.id}" class="target">id : ${searchCard.id}</div>
-                    <img src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}" alt="${searchCard.title}">
-                    <h3>제목 : ${searchCard.title}</h3>
+                    <div class="imgSort">
+                       <img
+                         src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}"
+                         alt="${searchCard.title}"
+                       />
+                    </div>                     <h3>제목 : ${searchCard.title}</h3>
                     <p>내용 요약 : ${searchCard.overview}</p>
                     <p class="Rating">평점 : ${searchCard.vote_average}</p>
                   `;
