@@ -5,7 +5,7 @@ const movieIdAlert = (keyName, prop) => {
     //카드 하나 클릭 시,
     prop[i].addEventListener("click", async (event) => {
       let onetargetCardId = event.target.children[0].id;
-      alert(`${keyName} : ${onetargetCardId}`);
+      window.alert(`${keyName} : ${onetargetCardId}`);
     });
   }
 };

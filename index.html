@@ -14,9 +14,9 @@
     <button id="searchBtn" type="button">검색</button>
     <div id="cards-container"></div>
 
-    <script type="module">
-      //필수 요구사항 [1] jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
-      //필수 요구사항[2] TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
+    <script>
+      //필수요구[1] - jQuery 라이브러리 사용없이 순수 바닐라 자바스크립트 사용하기
+      //필수요구[2] - TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
       const options = {
         method: "GET",
         headers: {
@@ -25,6 +25,7 @@
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
         },
       };
+
       //브라우저가 켜진 후
       document.addEventListener("DOMContentLoaded", async (e) => {
         const $cardAll = document.getElementsByClassName("card-content");
@@ -33,7 +34,11 @@
         const $searchBtn = document.querySelector("#searchBtn");
         const $cards = document.querySelector("#cards-container");
         const $input = document.querySelector("#input");
-        // 1. 영화정보 가져와서 담기
+        const inputValue = $input.value;
+
+        //선택사항 - 웹사이트 랜딩 또는 새로고침 후 input에 커서 자동 위치시키기
+        $input.focus();
+        // 1. 필수요구[2] - TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
         const movies = await fetch(url, options)
           .then((res) => res.json())
           .then((res) => {
@@ -41,10 +46,11 @@
             return movie;
           })
           .catch((err) => console.error(err));
+
         //2-1. response값 꺼내기
         // console.log(movies);
 
-        // 2-2. 화면에 보이기
+        // 2-2. 필수요구[3] - 영화정보 카드 리스트 UI 구현
         movies.forEach((mainCards, i) => {
           const $mainCardsDiv = document.createElement("div");
           // 2-3. 생성한 div에 클래스 붙여주기
@@ -59,25 +65,28 @@
 
           return $cards.append($mainCardsDiv);
         });
-        // =========================================================
-        // 3. 검색 버튼을 클릭 시,
-        $searchBtn.addEventListener("click", (e) => {
+        //검색 기능 함수=========================================================
+        //3. 검색 버튼을 클릭 시,필수요구[4] - 영화 검색 UI 구현
+        const searchBtnClick = (e) => {
           const $cardAll = document.getElementsByClassName("card-content");
           // 4. 인풋에 적은 키워드 가져와서 담기
           const inputValue = $input.value;
-          // 5. 검색어와 일치하는 정보 찾아내기
+          // 5-1. 검색어와 일치하는 정보 찾아내기
           const equalCardData = movies.filter((movie) => {
-            return movie.title.includes(inputValue);
+            // 5-2. 선택요구 - 대소문자 관계없이 검색 가능하게 하기
+            const upperValue = inputValue.toUpperCase();
+            return movie.title.toUpperCase().includes(upperValue);
           });
-          // 6. 이전 정보 비워주기 -incertAdjacentHTML("afterend", "");로 추후 수정해보기
-          // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 XXS공격에 취약
+          // 6. 이전 정보 비워주기
           $cards.innerHTML = "";
 
           // 7. 찾은 키워드에 대한 카드 정보를 채우기
           equalCardData.map((searchCard, i) => {
             const $searchCardDiv = document.createElement("div");
             $searchCardDiv.setAttribute("class", "card-content");
-            $searchCardDiv.innerHTML = ` 
+            //  -incertAdjacentHTML("afterend", "");로 추후 수정해보기
+            // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 XXS공격에 취약
+            $searchCardDiv.innerHTML = `
                     <div id="${searchCard.id}" class="target">id : ${searchCard.id}</div>
                     <img src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}" alt="${searchCard.title}">
                     <h3>제목 : ${searchCard.title}</h3>
@@ -87,11 +96,18 @@
 
             return $cards.append($searchCardDiv);
           });
-
-          //전체카드 중에서
+          // 필수요구[3] - 영화정보 카드 리스트 UI 구현 -카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
           movieIdAlert("영화 id", $cardAll);
+        };
+        // 선택요구 - 키보드 enter키를 입력해도 검색버튼 클릭한 것과 동일하게 검색 실행시키기
+        $input.addEventListener("keyup", (key) => {
+          if (key.keyCode === 13) {
+            searchBtnClick();
+          }
         });
-        //카드 클릭 시, 클릭한 영화카드 id값 alert창에 띄우기
+        $searchBtn.addEventListener("click", searchBtnClick);
+        //===================여기까지 검색
+        // 필수요구[3] - 영화정보 카드 리스트 UI 구현 -카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
         movieIdAlert("영화 id", $cardAll);
       });
     </script>
