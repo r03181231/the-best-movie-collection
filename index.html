@@ -64,8 +64,6 @@
         const $input = document.querySelector("#input");
         const inputValue = $input.value;
 
-        //선택사항 - 웹사이트 랜딩 또는 새로고침 후 input에 커서 자동 위치시키기
-        $input.focus();
         // 1. 필수요구[2] - TMDB 오픈 API를 이용하여 인기영화 데이터 가져오기
         const movies = await fetch(url, options)
           .then((res) => res.json())
@@ -74,6 +72,9 @@
             return movie;
           })
           .catch((err) => console.error(err));
+
+        //선택사항 - 웹사이트 랜딩 또는 새로고침 후 input에 커서 자동 위치시키기
+        $input.focus();
 
         //2-1. response값 꺼내기
         // console.log(movies);
@@ -113,7 +114,7 @@
             const targetCardId = e.target
               .closest(".card-content")
               .querySelector("div").id;
-            //targetCardId
+
             if (targetCardId) {
               window.alert("영화 id : " + targetCardId);
             }
