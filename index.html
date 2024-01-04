@@ -30,27 +30,14 @@
         </div>
       </header>
       <main>
-        <div id="cards-container" class="cardContainer">
-          <!-- <div class="card-content">
-            <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
-            <div class="imgSort">
-              <img
-                src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}"
-                alt="${mainCards.title}"
-              />
-            </div>
-            <h3>제목 : ${mainCards.title}</h3>
-            <p>내용 요약 : ${mainCards.overview}</p>
-            <p class="Rating">평점 : ${mainCards.vote_average}</p>
-          </div> -->
-        </div>
+        <div id="cards-container" class="cardContainer"></div>
       </main>
       <footer>
         <div>
-          <p>Designed by <span>11조 남해리</span></p>
+          <p>Designed by <span>남해리 in 빼빼로와 아이들, 11조</span></p>
         </div>
         <div>
-          <span>copyright. 프로그래밍 기초</span>
+          <p>copyright. 남해리</p>
         </div>
       </footer>
     </div>
@@ -93,12 +80,15 @@
 
         // 2-2. 필수요구[3] - 영화정보 카드 리스트 UI 구현
         //필수요구[5] - 하기 기재된 Javascript 문법 요소를 이용하여 구현
-        movies.forEach((mainCards, i) => {
-          const $mainCardsDiv = document.createElement("div");
+        movies.map((mainCards, i) => {
           // 2-3. 생성한 div에 클래스 붙여주기
+          const $mainCardsDiv = document.createElement("div");
           $mainCardsDiv.setAttribute("class", "card-content");
+          $mainCardsDiv.setAttribute("movieId", mainCards.id);
+          //div로 따로 놀던 div들을 묶어서 하나의 카드를 클릭했을 때 어딜 클릭해도 나오게끔
           $mainCardsDiv.innerHTML = `
-                    <div id="${mainCards.id}" class="target">id : ${mainCards.id}</div>
+                  <div id="${mainCards.id}" class="card-wrap">
+                    <div class="target">id : ${mainCards.id}</div>
                     <div class="imgSort">
                        <img
                          src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}"
@@ -107,10 +97,27 @@
                     </div>                    <h3>제목 : ${mainCards.title}</h3>
                     <p>내용 요약 : ${mainCards.overview}</p>
                     <p class="Rating">평점 : ${mainCards.vote_average}</p>
+                  </div>
                   `;
 
           return $cards.append($mainCardsDiv);
         });
+        // const $cardsEach = document.querySelector("#card-content");
+        // console.log($cardsEach);
+        $cards.addEventListener("click", (e) => {
+          //card-container
+          // console.log(e.target.closest(".card-content"));
+          if (e.target.closest(".card-content") !== null) {
+            const targetCardId = e.target
+              .closest(".card-content")
+              .querySelector("div").id;
+            //targetCardId
+            if (targetCardId) {
+              window.alert("영화 id : " + targetCardId);
+            }
+          }
+        });
+
         //검색 기능 함수=========================================================
         //3. 검색 버튼을 클릭 시,필수요구[4] - 영화 검색 UI 구현
         const searchBtnClick = (e) => {
@@ -135,7 +142,8 @@
             //  -incertAdjacentHTML("afterend", "");로 추후 수정해보기
             // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 XXS공격에 취약
             $searchCardDiv.innerHTML = `
-                    <div id="${searchCard.id}" class="target">id : ${searchCard.id}</div>
+                  <div id="${searchCard.id}" class="card-wrap">
+                    <div class="target">id : ${searchCard.id}</div>
                     <div class="imgSort">
                        <img
                          src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}"
@@ -144,12 +152,13 @@
                     </div>                     <h3>제목 : ${searchCard.title}</h3>
                     <p>내용 요약 : ${searchCard.overview}</p>
                     <p class="Rating">평점 : ${searchCard.vote_average}</p>
+                </div>
                   `;
 
             return $cards.append($searchCardDiv);
           });
           // 필수요구[3] - 영화정보 카드 리스트 UI 구현 -카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
-          movieIdAlert("영화 id", $cardAll);
+          // movieIdAlert("영화 id", $cardAll);
         };
         // 선택요구 - 키보드 enter키를 입력해도 검색버튼 클릭한 것과 동일하게 검색 실행시키기
         $input.addEventListener("keyup", (key) => {
@@ -159,10 +168,21 @@
         });
         $searchBtn.addEventListener("click", searchBtnClick);
         //===================여기까지 검색
+        // const $cardTarget = document.getElementsByClassName("card-wrap");
+
+        // console.log($cardTarget);
+
         // 필수요구[3] - 영화정보 카드 리스트 UI 구현 -카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
-        movieIdAlert("영화 id", $cardAll);
+        // for (let i = 0; i < $cardTarget.length; i++) {
+        //   console.log($cardTarget[i]);
+        //   //카드 하나 클릭 시,
+        //   $cardTarget[i].addEventListener("click", async (e) => {
+        //     let onetargetCardId = event.target.id;
+        //     // console.log(onetargetCardId);
+        //     window.alert(`영화 id : ${onetargetCardId}`);
+        //   });
+        // }
       });
     </script>
-    <script src="./js/alert.js"></script>
   </body>
 </html>

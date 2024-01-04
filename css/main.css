@@ -43,25 +43,37 @@ main {
   justify-content: center;
 }
 
+/* .card-content {
+  width: 300px;
+  height: 100%;
+} */
+
 .titleNsearch {
-  background-color: rgba(197, 245, 197, 0.8);
+  background-color: rgba(247, 108, 95, 0.2);
+  /* background-color: rgba(197, 245, 197, 0.8); */
+
   min-width: 2rem;
   max-width: 100%;
 
-  margin: 0 auto;
+  margin: auto 0;
   padding: 20px;
-
-  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px;
 
   display: flex;
   flex-direction: row;
+  justify-content: center;
 
   gap: 10px;
 }
+
 .titleNsearch:hover,
 .titleNsearch:focus {
   box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.card-content > h3 {
+  margin-top: 10px;
+  font-size: 1rem;
 }
 
 .inputNsearchBtn {
@@ -76,7 +88,7 @@ main {
 #input {
   padding: 5px;
 
-  border-radius: 20px;
+  border-radius: 10px;
   border-color: white;
 
   font-size: 1rem;
@@ -89,8 +101,10 @@ main {
 
 .searchBtnWrap > button {
   background-color: #fff;
-  width: 50px;
+  width: 80px;
   padding: 6px;
+
+  font-size: 1rem;
 
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -99,12 +113,19 @@ main {
 .searchBtnWrap > button:hover {
   background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
+.searchBtnWrap > button:focus {
+  box-shadow: inset 0.2rem 0.2rem rgba(33, 33, 33, 0.1);
+}
+
+/* 영화 id 안 보이게 하기 */
 /* .target {
   display: none;
 } */
 
+/* 영화 카드 보따리 */
 .cardContainer {
   display: grid;
   /* grid-template-columns: repeat(3, 1fr);
@@ -115,6 +136,7 @@ main {
   gap: 20px;
 }
 
+/* 영화 카드들 */
 .card-content {
   /* background-color: green; */
   border-radius: 20px;
@@ -132,6 +154,7 @@ main {
   box-shadow: 0px 5px 8px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* 영화 포스터 이미지 */
 .imgSort > img {
   width: 100%;
   min-height: 400px;
@@ -139,16 +162,17 @@ main {
   object-fit: cover;
 }
 
-.card-content > h3 {
-  margin-top: 10px;
-}
+/* 카퓌라이트 copyright */
 
 footer {
+  height: 80px;
   display: flex;
-  flex-direction: colum;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
   margin-top: 20px;
   padding: 20px;
+
+  gap: 6px;
 }
