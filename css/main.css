@@ -122,7 +122,7 @@ main {
 }
 
 /* 영화 카드 전체를 감싼 보따리 */
-.cardContainer {
+.cards-box {
   min-width: 300px;
   display: grid;
   padding: 40px;
