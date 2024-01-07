@@ -1,15 +1,15 @@
-// openAPI
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
-  },
-};
-
 //브라우저가 켜진 후
 document.addEventListener("DOMContentLoaded", async () => {
+  // openAPI
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
+    },
+  };
+
   const url =
     "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
   const movies = await fetch(url, options)
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       return movie;
     })
     .catch((err) => console.error(err));
-  const $searchBtn = document.querySelector("#searchBtn");
-  const $cards = document.querySelector("#cards-container");
-  const $input = document.querySelector("#input");
+  const $searchBtn = document.querySelector("#searchBtn"); // 검색버튼
+  const $cards = document.querySelector("#cards-container"); // 카드 최상위 div
+  const $input = document.querySelector("#input"); // 검색어 input태그
   // 웹사이트 랜딩 또는 새로고침 후 input에 커서 자동 위치시키기
   $input.focus();
   // 영화정보 카드 리스트 UI
