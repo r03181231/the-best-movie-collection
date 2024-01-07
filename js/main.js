@@ -30,8 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const $mainCardsDiv = document.createElement("div");
     $mainCardsDiv.setAttribute("class", "card-content");
     $mainCardsDiv.setAttribute("movieId", mainCards.id);
-    //div로 따로 놀던 div들을 묶어서 하나의 카드를 클릭했을 때 어딜 클릭해도 나오게끔
-    $mainCardsDiv.innerHTML = `
+    let add_html = `
                   <div id="${mainCards.id}" class="card-wrap">
                     <div class="target">id : ${mainCards.id}</div>
                     <div class="imgSort">
@@ -45,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="rating">Rating : <span class="rating-number">${mainCards.vote_average}</span></p>
                   </div>
                   `;
+    $mainCardsDiv.insertAdjacentHTML("beforeend", add_html);
     return $cards.insertAdjacentElement("beforeend", $mainCardsDiv);
   });
 
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         .closest(".card-content")
         .querySelector("div").id;
 
-      console.log(e.target.getElementsByClassName("card-content"));
       if (targetCardId) {
         window.alert(`영화 id : ${targetCardId}`);
       }
@@ -79,9 +78,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       const $searchCardDiv = document.createElement("div");
       $searchCardDiv.setAttribute("class", "card-content");
       $searchCardDiv.setAttribute("movieId", searchCard.id);
-      //  -incertAdjacentHTML("afterend", "");로 추후 수정해보기
+      //  -incertAdjacentHTML("beforeend", ~);로 추후 수정해보기
       // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 볼 수 있기에 XXS공격에 취약
-      $searchCardDiv.innerHTML = `
+      let add_html = `
                   <div id="${searchCard.id}" class="card-wrap">
                     <div class="target">id : ${searchCard.id}</div>
                     <div class="imgSort">
@@ -89,13 +88,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                          src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}"
                          alt="${searchCard.title}"
                        />
-                    </div>
+                    </div>                    
                     <h3>${searchCard.title}</h3>
                     <p class="over-view">${searchCard.overview}</p>
                     <p class="rating">Rating : <span class="rating-number">${searchCard.vote_average}</span></p>
-                </div>
+                  </div>
                   `;
-
+      $searchCardDiv.insertAdjacentHTML("beforeend", add_html);
       return $cards.insertAdjacentElement("beforeend", $searchCardDiv);
     });
   };
