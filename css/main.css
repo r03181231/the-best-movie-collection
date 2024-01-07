@@ -49,7 +49,6 @@ main {
 
 .titleNsearch {
   background-color: rgba(247, 108, 95, 0.2);
-  /* background-color: rgba(197, 245, 197, 0.8); */
 
   min-width: 2rem;
   max-width: 100%;
@@ -106,7 +105,6 @@ main {
   font-size: 1.2rem;
 
   border: none;
-  /* border: 1px solid rgba(0, 0, 0, 0.2); */
   border-radius: 10px;
 }
 

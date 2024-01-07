@@ -1,15 +1,15 @@
+// openAPI
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
+  },
+};
+
 //브라우저가 켜진 후
 document.addEventListener("DOMContentLoaded", async () => {
-  // openAPI
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
-    },
-  };
-
   const url =
     "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
   const movies = await fetch(url, options)
@@ -30,8 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const $mainCardsDiv = document.createElement("div");
     $mainCardsDiv.setAttribute("class", "card-content");
     $mainCardsDiv.setAttribute("movieId", mainCards.id);
-    //div로 따로 놀던 div들을 묶어서 하나의 카드를 클릭했을 때 어딜 클릭해도 나오게끔
-    $mainCardsDiv.innerHTML = `
+    let add_html = `
                   <div id="${mainCards.id}" class="card-wrap">
                     <div class="target">id : ${mainCards.id}</div>
                     <div class="imgSort">
@@ -45,11 +44,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="rating">Rating : <span class="rating-number">${mainCards.vote_average}</span></p>
                   </div>
                   `;
+    $mainCardsDiv.insertAdjacentHTML("beforeend", add_html);
     return $cards.insertAdjacentElement("beforeend", $mainCardsDiv);
   });
 
   // 필수요구 - 카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
   $cards.addEventListener("click", (e) => {
+    e.preventDefault();
     if (e.target.closest(".card-content") !== null) {
       const targetCardId = e.target
         .closest(".card-content")
@@ -73,13 +74,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     $cards.innerHTML = "";
 
     // 찾은 키워드에 대한 카드 정보를 채우기
-    equalCardData.forEach((searchCard, i) => {
+    equalCardData.forEach((searchCard) => {
       const $searchCardDiv = document.createElement("div");
       $searchCardDiv.setAttribute("class", "card-content");
       $searchCardDiv.setAttribute("movieId", searchCard.id);
-      //  -incertAdjacentHTML("afterend", "");로 추후 수정해보기
+      //  -incertAdjacentHTML("beforeend", ~);로 추후 수정해보기
       // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 볼 수 있기에 XXS공격에 취약
-      $searchCardDiv.innerHTML = `
+      let add_html = `
                   <div id="${searchCard.id}" class="card-wrap">
                     <div class="target">id : ${searchCard.id}</div>
                     <div class="imgSort">
@@ -87,13 +88,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                          src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}"
                          alt="${searchCard.title}"
                        />
-                    </div>
+                    </div>                    
                     <h3>${searchCard.title}</h3>
                     <p class="over-view">${searchCard.overview}</p>
                     <p class="rating">Rating : <span class="rating-number">${searchCard.vote_average}</span></p>
-                </div>
+                  </div>
                   `;
-
+      $searchCardDiv.insertAdjacentHTML("beforeend", add_html);
       return $cards.insertAdjacentElement("beforeend", $searchCardDiv);
     });
   };
