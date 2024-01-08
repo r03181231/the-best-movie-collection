@@ -46,8 +46,7 @@ main {
 }
 
 /* 검색창 제목, 검색창, 검색버튼 전체를 감싼 상자*/
-
-.titleNsearch {
+.title-nd-search {
   background-color: rgba(247, 108, 95, 0.2);
 
   min-width: 2rem;
@@ -64,13 +63,13 @@ main {
   gap: 10px;
 }
 
-.titleNsearch:hover,
-.titleNsearch:focus {
+.title-nd-search:hover,
+.title-nd-search:focus {
   box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* 검색창과 검색버튼 감싼 상자*/
-.inputNsearchBtn {
+.input-search-btn {
   min-width: 300px;
   max-width: 500px;
 
@@ -92,15 +91,16 @@ main {
   font-size: 1.2rem;
 }
 
-.searchBtnWrap {
+.search-btn-wrap {
   display: flex;
   align-items: center;
 }
 
-.searchBtnWrap > button {
+.search-btn-wrap > button {
   background-color: #fff;
-  width: 6rem;
-  padding: 6px;
+  min-width: 2rem;
+  max-width: 6rem;
+  padding: 20px;
 
   font-size: 1.2rem;
 
@@ -108,14 +108,14 @@ main {
   border-radius: 10px;
 }
 
-.searchBtnWrap > button:hover {
+.search-btn-wrap > button:hover {
   background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
-.searchBtnWrap > button:focus {
+.search-btn-wrap > button:focus {
   box-shadow: inset 0.2rem 0.2rem rgba(33, 33, 33, 0.1);
 }
 
@@ -158,7 +158,7 @@ main {
 }
 
 /* 영화 포스터 이미지 */
-.imgSort > img {
+.img-wrap > img {
   width: 100%;
   min-height: 400px;
   max-height: 3rem;

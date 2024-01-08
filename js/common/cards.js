@@ -2,27 +2,23 @@ import { $cards } from "./values.js";
 
 export const cards = (arr) => {
   arr.map((card) => {
-    const id = card.id;
-    const posterPath = card.poster_path;
-    const title = card.title;
-    const overview = card.overview;
-    const voteAverage = card.vote_average;
+    const { id, poster_path, title, overview, vote_average } = card;
 
     return $cards.insertAdjacentHTML(
       "beforeend",
       `
                <div class="card-content" id="${id}">
-                  <div class="cards-wrap" id="${id}">
+                  <div class="card-wrap" id="${id}">
                     <div class="target">id : ${id}</div>
-                    <div class="imgSort">
+                    <div class="img-wrap">
                        <img
-                         src="https://image.tmdb.org/t/p/w500${posterPath}"
+                         src="https://image.tmdb.org/t/p/w500${poster_path}"
                          alt="${title}"
                        />
                     </div>
                     <h3>${title}</h3>
                     <p class="over-view">${overview}</p>
-                    <p class="rating">Rating : <span class="rating-number">${voteAverage}</span></p>
+                    <p class="rating">Rating : <span class="rating-number">${vote_average}</span></p>
                   </div>
                 </div>
                   `

@@ -7,7 +7,6 @@ export const search = async () => {
   const inputValue = $input.value;
   //키워드 포함한 영화 찾기
   const equalCardData = movies.filter((movie) => {
-    console.log(inputValue);
     const upperValue = inputValue.toUpperCase();
     return movie.title.toUpperCase().includes(upperValue);
   });
