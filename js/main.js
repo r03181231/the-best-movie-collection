@@ -30,33 +30,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   $input.focus();
   // 영화정보 카드 리스트 UI
   // 로드될 시 보이는 메인 화면
-  movies.map((card) => {
-    const id = card.id;
-    const posterPath = card.poster_path;
-    const title = card.title;
-    const overview = card.overview;
-    const voteAverage = card.vote_average;
+  // const movieCards = (arr) => {
+  //   arr.map((card) => {
+  //     const id = card.id;
+  //     const posterPath = card.poster_path;
+  //     const title = card.title;
+  //     const overview = card.overview;
+  //     const voteAverage = card.vote_average;
 
-    return $cards.insertAdjacentHTML(
-      "beforeend",
-      `
-                <div class="card-content" movieId="${id}">
-                  <div id="${id}" class="card-wrap">
-                    <div class="target">id : ${id}</div>
-                    <div class="imgSort">
-                       <img
-                         src="https://image.tmdb.org/t/p/w500${posterPath}"
-                         alt="${title}"
-                       />
-                    </div>                    
-                    <h3>${title}</h3>
-                    <p class="over-view">${overview}</p>
-                    <p class="rating">Rating : <span class="rating-number">${voteAverage}</span></p>
-                  </div>
-                </div>
-                  `
-    );
-  });
+  //     return $cards.insertAdjacentHTML(
+  //       "beforeend",
+  //       `
+  //               <div class="card-content" movieId="${id}">
+  //                 <div id="${id}" class="card-wrap">
+  //                   <div class="target">id : ${id}</div>
+  //                   <div class="imgSort">
+  //                      <img
+  //                        src="https://image.tmdb.org/t/p/w500${posterPath}"
+  //                        alt="${title}"
+  //                      />
+  //                   </div>
+  //                   <h3>${title}</h3>
+  //                   <p class="over-view">${overview}</p>
+  //                   <p class="rating">Rating : <span class="rating-number">${voteAverage}</span></p>
+  //                 </div>
+  //               </div>
+  //                 `
+  //     );
+  //   });
+  // };
+  movieCards(movies);
   // 필수요구 - 카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
   $cards.addEventListener("click", (e) => {
     if (e.target.closest(".card-content") !== null) {
