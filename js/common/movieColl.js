@@ -21,3 +21,5 @@ export const movieColl = async () => {
     });
   return data;
 };
+
+export default movieColl;
