@@ -1,15 +1,19 @@
-// openAPI
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
-  },
-};
+import movieColl from "./movies";
 
 //브라우저가 켜진 후
 document.addEventListener("DOMContentLoaded", async () => {
+  // const movies = movieColl();
+  console.log(movieColl);
+  // openAPI
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmYyZWNmMzg2NmU3NDI5Nzk5ODdmMWY4NWIxOGQxNyIsInN1YiI6IjY1OGVjZmUwOWYxYmU3Njg2NzgwY2I3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GCIqNf864_nSJFKca9jtRMZzbPuVE4F2TBjeQm1in5A",
+    },
+  };
+
   const url =
     "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
   const movies = await fetch(url, options)
@@ -26,31 +30,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   $input.focus();
   // 영화정보 카드 리스트 UI
   // 로드될 시 보이는 메인 화면
-  movies.map((mainCards) => {
-    const $mainCardsDiv = document.createElement("div");
-    $mainCardsDiv.setAttribute("class", "card-content");
-    $mainCardsDiv.setAttribute("movieId", mainCards.id);
-    let add_html = `
-                  <div id="${mainCards.id}" class="card-wrap">
-                    <div class="target">id : ${mainCards.id}</div>
+  movies.map((card) => {
+    const id = card.id;
+    const posterPath = card.poster_path;
+    const title = card.title;
+    const overview = card.overview;
+    const voteAverage = card.vote_average;
+
+    return $cards.insertAdjacentHTML(
+      "beforeend",
+      `
+                <div class="card-content" movieId="${id}">
+                  <div id="${id}" class="card-wrap">
+                    <div class="target">id : ${id}</div>
                     <div class="imgSort">
                        <img
-                         src="https://image.tmdb.org/t/p/w500${mainCards.poster_path}"
-                         alt="${mainCards.title}"
+                         src="https://image.tmdb.org/t/p/w500${posterPath}"
+                         alt="${title}"
                        />
                     </div>                    
-                    <h3>${mainCards.title}</h3>
-                    <p class="over-view">${mainCards.overview}</p>
-                    <p class="rating">Rating : <span class="rating-number">${mainCards.vote_average}</span></p>
+                    <h3>${title}</h3>
+                    <p class="over-view">${overview}</p>
+                    <p class="rating">Rating : <span class="rating-number">${voteAverage}</span></p>
                   </div>
-                  `;
-    $mainCardsDiv.insertAdjacentHTML("beforeend", add_html);
-    return $cards.insertAdjacentElement("beforeend", $mainCardsDiv);
+                </div>
+                  `
+    );
   });
-
   // 필수요구 - 카드 클릭 시에는 클릭한 영화 id 를 나타내는 alert 창을 띄웁니다.
   $cards.addEventListener("click", (e) => {
-    e.preventDefault();
     if (e.target.closest(".card-content") !== null) {
       const targetCardId = e.target
         .closest(".card-content")
@@ -72,37 +80,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     // 이전 정보 비워주기
     $cards.innerHTML = "";
-
     // 찾은 키워드에 대한 카드 정보를 채우기
-    equalCardData.forEach((searchCard) => {
-      const $searchCardDiv = document.createElement("div");
-      $searchCardDiv.setAttribute("class", "card-content");
-      $searchCardDiv.setAttribute("movieId", searchCard.id);
-      //  -incertAdjacentHTML("beforeend", ~);로 추후 수정해보기
-      // innerHTML은 script문으로 공격하면 text로 dom정보를 다 가져와서 볼 수 있기에 XXS공격에 취약
-      let add_html = `
-                  <div id="${searchCard.id}" class="card-wrap">
-                    <div class="target">id : ${searchCard.id}</div>
+    equalCardData.map((card) => {
+      const id = card.id;
+      const posterPath = card.poster_path;
+      const title = card.title;
+      const overview = card.overview;
+      const voteAverage = card.vote_average;
+
+      return $cards.insertAdjacentHTML(
+        "beforeend",
+        `
+                <div class="card-content" movieId="${id}">
+                  <div id="${id}" class="card-wrap">
+                    <div class="target">id : ${id}</div>
                     <div class="imgSort">
                        <img
-                         src="https://image.tmdb.org/t/p/w500${searchCard.poster_path}"
-                         alt="${searchCard.title}"
+                         src="https://image.tmdb.org/t/p/w500${posterPath}"
+                         alt="${title}"
                        />
                     </div>                    
-                    <h3>${searchCard.title}</h3>
-                    <p class="over-view">${searchCard.overview}</p>
-                    <p class="rating">Rating : <span class="rating-number">${searchCard.vote_average}</span></p>
+                    <h3>${title}</h3>
+                    <p class="over-view">${overview}</p>
+                    <p class="rating">Rating : <span class="rating-number">${voteAverage}</span></p>
                   </div>
-                  `;
-      $searchCardDiv.insertAdjacentHTML("beforeend", add_html);
-      return $cards.insertAdjacentElement("beforeend", $searchCardDiv);
+                </div>
+                  `
+      );
     });
   };
   // 여기까지 검색 기능과 검색하면 다시 붙이는
   //input값 입력하고 엔터해도 검색 기능 동작
   $input.addEventListener("keyup", (key) => {
     if (key.keyCode === 13) {
-      document.getElementsByClassName("seachBtn");
+      document.querySelector("seachBtn");
       searchBtnClick();
     }
   });
