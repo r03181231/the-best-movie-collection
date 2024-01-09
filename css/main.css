@@ -222,3 +222,30 @@ footer {
 
   gap: 6px;
 }
+
+/* top버튼 - 화면 최상단으로 이동 */
+.top-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+
+  display: none;
+}
+
+.top-btn > button {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 80px;
+  height: 80px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid gray;
+  border-radius: 50px;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+
+  cursor: pointer;
+}
