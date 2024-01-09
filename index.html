@@ -12,12 +12,14 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
+    <!-- 헤더, 메인, 푸터 전체를 감싸는 요소 -->
     <div class="layout-1280">
+      <!-- 헤더 제목 : 최고 평점 영화 콜렉션 -->
       <header>
-        <h1>최고 평점 영화 콜렉션</h1>
+        <h1 id="go-page">최고 평점 영화 콜렉션</h1>
         <div class="title-nd-search">
-          <h2>영화 검색</h2>
           <div class="input-search-btn">
+            <label>영화 검색</label>
             <input
               type="text"
               id="input"
@@ -29,9 +31,13 @@
           </div>
         </div>
       </header>
+
+      <!-- 영화 카드 조회 -->
       <main>
         <div id="cards-container" class="cards-box"></div>
       </main>
+
+      <!-- 만든이, 소속, 카피라이트 -->
       <footer>
         <div>
           <p>Designed by <span>남해리 in 빼빼로와 아이들, 11조</span></p>
