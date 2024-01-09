@@ -173,6 +173,8 @@ $ cd the-best-movie-collection
 
 - [x] 헤더 제목 클릭 시, js로 메인 화면 홈을 다시 보여주기
 
+- [x] top버튼 클릭 시, 스크롤 따라 최상단으로 이동
+
 
 <br />
 
