@@ -94,6 +94,8 @@
 #### github rules
 
 - commit message
+  - rename : 파일 이름 변경
+  - refactor : 개선 사항 및 피드백 반영
   - bugfix : 버그, 오류 수정
   - add : 파일 및 내용 추가
   - feat : 기능 구현 상태
