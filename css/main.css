@@ -14,6 +14,7 @@ header {
   max-width: 100%;
 
   padding: 40px;
+
   display: flex;
   flex-direction: column;
 
@@ -26,39 +27,25 @@ h1 {
 
   font-size: 2.4rem;
   font-weight: bold;
-}
 
-h2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 1.4rem;
-}
-
-main {
-  min-width: 300px;
-  max-width: 1280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
 }
 
 /* 검색창 제목, 검색창, 검색버튼 전체를 감싼 상자*/
 .title-nd-search {
   background-color: rgba(247, 108, 95, 0.2);
 
-  min-width: 2rem;
+  min-width: 3rem;
   max-width: 100%;
 
   margin: auto 0;
   padding: 30px;
-  border-radius: 20px;
 
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  border-radius: 20px;
 
   gap: 10px;
 }
@@ -81,8 +68,17 @@ main {
   gap: 10px;
 }
 
+.input-search-btn > label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.4rem;
+}
+
 #input {
-  width: 250px;
+  width: 230px;
+
   padding: 10px;
 
   border-radius: 10px;
@@ -98,20 +94,21 @@ main {
 
 .search-btn-wrap > button {
   background-color: #fff;
-  min-width: 2rem;
-  max-width: 6rem;
-  padding: 20px;
+  width: 5rem;
 
-  font-size: 1.2rem;
+  padding: 8px;
 
   border: none;
   border-radius: 10px;
+
+  font-size: 1.2rem;
 }
 
 .search-btn-wrap > button:hover {
   background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.1);
+
   cursor: pointer;
 }
 
@@ -119,11 +116,22 @@ main {
   box-shadow: inset 0.2rem 0.2rem rgba(33, 33, 33, 0.1);
 }
 
-/* 영화 카드 전체를 감싼 보따리 */
+/* 영화 카드 전체를 감싼 영역 */
+main {
+  min-width: 300px;
+  max-width: 1280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 영화 카드들을 감싼 영역 */
 .cards-box {
-  display: grid;
   padding: 40px;
 
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-template-rows: auto;
 
@@ -132,8 +140,8 @@ main {
 
 /* 영화 카드 하나를 품은 상자 */
 .card-content {
-  border-radius: 20px;
   padding: 2rem;
+  border-radius: 20px;
 }
 
 .card-content:hover,
@@ -162,12 +170,14 @@ main {
   width: 100%;
   min-height: 400px;
   max-height: 3rem;
+
   object-fit: cover;
 }
 
 /* 영화 제목 */
 .card-wrap > h3 {
   margin-top: 10px;
+
   font-size: 1.4rem;
   font-weight: bold;
 }
@@ -183,16 +193,30 @@ main {
   font-weight: bold;
 }
 
+/* 해당 검색어가 없을 때 메세지 */
+.not-search {
+  display: flex;
+  justify-content: center;
+
+  font-size: 1.4rem;
+}
+
+.not-search span {
+  color: rgb(247, 108, 95);
+  font-weight: bold;
+}
+
 /* 카퓌라이트 copyright */
 footer {
   height: 80px;
+
+  margin-top: 40px;
+  padding: 20px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  margin-top: 40px;
-  padding: 20px;
 
   gap: 6px;
 }
