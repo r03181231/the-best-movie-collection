@@ -10,7 +10,7 @@
 
 /* 영화 콜렉션 검색창 제목과 최상위 제목 감싼 헤더*/
 header {
-  min-width: 300px;
+  /* min-width: 300px; */
   max-width: 100%;
   max-height: 290px;
 
