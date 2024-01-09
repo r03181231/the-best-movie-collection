@@ -1,7 +1,7 @@
 //search.js - 검색 기능 - 검색 했을 때 화면과 반응
 import movieColl from "./movieColl.js";
 import { cards } from "./cards.js";
-import { $cards, $input, blank_pattern } from "./values.js";
+import { $cards, $input, blankPattern } from "./values.js";
 
 export const search = async () => {
   const movies = await movieColl();
@@ -14,7 +14,7 @@ export const search = async () => {
 
     return collect;
   });
-  const regExp = inputValue.replace(blank_pattern, "") === "" || equalCardData.length === 0;
+  const regExp = inputValue.replace(blankPattern, "") === "" || equalCardData.length === 0;
 
   // 검색input 유효성 - 공백만 있거나 일치하는 결과가 없을 때 해당 메세지 첨부하기.
   if (regExp) {

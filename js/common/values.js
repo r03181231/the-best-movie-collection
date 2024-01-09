@@ -1,5 +1,4 @@
 // values.js - 공통으로 쓰는 변수 모음
-// export const $header = document.querySelector(".header");
 export const $searchBtn = document.querySelector("#searchBtn"); // 검색버튼
 export const $cards = document.querySelector("#cards-container"); // 카드 최상위 div
 export const $input = document.querySelector("#input"); // 검색 input
