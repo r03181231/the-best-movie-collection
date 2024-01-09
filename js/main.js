@@ -1,15 +1,10 @@
+// main.js - 메인 기능 모음
 import movieColl from "./common/movieColl.js";
 import { cards } from "./common/cards.js";
 import { search } from "./common/search.js";
 import { enterSearch } from "./item/enterSearch.js";
 import { alert } from "./item/alert.js";
-import {
-  $cards,
-  $goToPage,
-  $input,
-  $searchBtn,
-  goToPage,
-} from "./common/values.js";
+import { $cards, $goToPage, $input, $searchBtn, goToPage } from "./common/values.js";
 
 //브라우저가 켜진 후
 document.addEventListener("DOMContentLoaded", async () => {
