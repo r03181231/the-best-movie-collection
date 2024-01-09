@@ -15,7 +15,7 @@ export const goToTop = () => {
   if (window.scrollY !== 0) {
     setTimeout(() => {
       //지정된 상단 x축 0, y축 상단에서 부터 아래로 100위치
-      window.scrollTo(0, window.scrollY - 100);
+      window.scrollTo(0, window.scrollY - 120);
       goToTop();
     }, 3);
   }
