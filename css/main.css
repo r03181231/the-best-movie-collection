@@ -197,6 +197,7 @@ main {
 .not-search {
   display: flex;
   justify-content: center;
+  padding-top: 40px;
 
   font-size: 1.4rem;
 }
