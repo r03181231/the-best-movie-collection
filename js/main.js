@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const movies = await movieColl();
   // 헤더 제목 클릭 시, 메인 페이지 이동
   $goToPage.addEventListener("click", goToPage);
+  // $header.addEventListener("scroll", moveHead)
   // 웹사이트 랜딩 또는 새로고침 후 input에 커서 자동 위치시키기
   $input.focus();
   // 영화정보 카드 리스트 UI - 로드될 시, 보이는 메인 화면
