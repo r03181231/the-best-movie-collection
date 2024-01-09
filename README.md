@@ -168,10 +168,5 @@ $ cd the-best-movie-collection
 
 <br />
 
-## 트러블 슈팅
-
-
-
-- "남해리"
 
 
