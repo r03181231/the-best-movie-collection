@@ -12,13 +12,10 @@ export const movieColl = async () => {
 
   const url = "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
   //변수에 자료 할당하기
-  const data = await fetch(url, options)
-    .then((res) => res.json())
-    .then((res) => {
-      const movie = res.results;
-      return movie;
-    });
-  return data;
+  const data = await fetch(url, options).then((res) => {
+    return res.json();
+  });
+  return data.results;
 };
 
 export default movieColl;
