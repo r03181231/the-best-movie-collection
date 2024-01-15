@@ -34,7 +34,7 @@
 
 |                            남해리                            |
 | :----------------------------------------------------------: |
-|                          Enfp, Infp                          |
+|                          Enfj, Infp                          |
 | <p><img src="https://lh7-us.googleusercontent.com/Ysape_5NRn4N32ZU7oOgrQmrfIAjTdQXKka5lOI6M6JxrEWg48DNhLQEXET56SbLP6f4CEJsn5RpDDoHgM9m6eDLyUolLBdP_xbLnp0gftdJg0hYUrKGwSXXVQxNO02AiSTl_4Wp0nHn9CSfQBblXhM" width="250px" /></p> |
 |          [@r03181231](https://github.com/r03181231)          |
 |                           FrontEnd                           |
